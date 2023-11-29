@@ -13,6 +13,11 @@ public class SignupUser{
 		String mail, 
 		int userTypeId) {
 		
+		this.accountId = accountId;
+		this.name = name;
+		this.pass = pass;
+		this.mail = mail;
+		this.userTypeId = userTypeId;
 	}
 	public void setAccountId(String accountId) {
 		this.accountId = accountId;

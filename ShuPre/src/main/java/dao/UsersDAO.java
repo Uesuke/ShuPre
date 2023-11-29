@@ -34,23 +34,30 @@ public class UsersDAO {
 		}
 		//データベースに接続
 		try(Connection conn = DriverManager.getConnection(JDBC_URL, DB_USER,DB_PASS)) {
-			//SELECT文を準備
-			String sql = "INSERT INTO Users (accountId, name, pass, mail, userTypeId) VALUES('?', '?', '?', '?', ?);";
-			PreparedStatement pStmt = conn.prepareStatement(sql);
+			//INSERT文を準備
+			String sql = "INSERT INTO Users (accountId, name, pass, mail, userTypeId) VALUES(?, ?, ?, ?, ?);";
+			PreparedStatement pStmt = conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
 			pStmt.setString(1, accountId);
 			pStmt.setString(2, name);
 			pStmt.setString(3, pass);
 			pStmt.setString(4, mail);
 			pStmt.setInt(5, userTypeId);
 			
-			sql = "SELECT userId FROM Users WHERE accountId = ?";
-			pStmt = conn.prepareStatement(sql);
-			pStmt.setString(1, signupUser.getAccountId());
+			//INSERT文の実行
+			int affectedRows = pStmt.executeUpdate();
+	        if (affectedRows == 0) {
+	            throw new SQLException("ユーザーの登録に失敗しました。");
+	        }
 			
-			ResultSet rs = pStmt.executeQuery();
-			int userId = rs.getInt("userId");
-			
-			user = new User(userId, accountId,name, pass, mail, userTypeId);			
+	        //生成されたuserIdキーを取得し、Userインスタンスを生成
+	        try (ResultSet generatedKeys = pStmt.getGeneratedKeys()) {
+	            if (generatedKeys.next()) {
+	                int userId = generatedKeys.getInt(1);
+	                user = new User(userId, accountId, name, pass, mail, userTypeId);
+	            } else {
+	                throw new SQLException("ユーザーIDの取得に失敗しました。");
+	            }
+	        }			
 		}catch(SQLException e) {
 			return null;
 		}
@@ -89,6 +96,7 @@ public class UsersDAO {
 				user = new User(userId, accountId, name, pass, mail, userTypeId);
 			}
 		}catch(SQLException e) {
+			e.printStackTrace();
 			return null;
 		}
 		return user;
@@ -105,19 +113,21 @@ public class UsersDAO {
 		}
 		//データベースに接続
 		try(Connection conn = DriverManager.getConnection(JDBC_URL, DB_USER,DB_PASS)) {
-			String sql = "SELECT COUNT(*) FROM Users WHERE accountId = '?';";
+			String sql = "SELECT COUNT(*) AS num FROM Users WHERE accountId = ?;";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 			pStmt.setString(1, accountId);
 			
 			//SELECT文を実行し、結果表を取得
 			ResultSet rs = pStmt.executeQuery();
 			
-			int numOfDupli = rs.getInt("COUNT(*)");
-			
-			if(numOfDupli > 0) {
-				hasDupli = true;
+			if (rs.next()) {
+			    int numOfDupli = rs.getInt("num");
+			    if (numOfDupli != 0) {
+			        hasDupli = true;
+			    }
 			}
 		}catch(SQLException e) {
+			e.printStackTrace();
 			return true;
 		}
 		return hasDupli;
