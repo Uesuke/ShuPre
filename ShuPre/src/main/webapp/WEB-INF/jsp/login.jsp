@@ -20,8 +20,8 @@
                         <button type="submit">ログイン</button>
                     </form>
                 </div>
-                <p>※アカウントをお持ちでない方は<a href="signup.html">こちら</a></p>
-                <p><a href="index.html">トップへ</a></p>
+                <p>※アカウントをお持ちでない方は<a href="SignupServlet">こちら</a></p>
+                <p><a href="index.jsp">トップへ</a></p>
             </div>
         </div>
     </body>

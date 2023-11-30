@@ -13,7 +13,7 @@
                 <h1>トップ画面</h1>
                 <ul>
                     <li><a href="LoginServlet">ログイン</a></li>
-                    <li><a href="signup.jsp">サインアップ</a></li>
+                    <li><a href="SignupServlet">サインアップ</a></li>
                 </ul>
             </div>
         </div>

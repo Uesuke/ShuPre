@@ -16,6 +16,12 @@ import model.SignupUser;
 @WebServlet("/SignupServlet")
 public class SignupServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		//フォワード
+		RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/signup.jsp");
+		dispatcher.forward(request, response);
+	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//リクエストパラメータの取得
@@ -31,21 +37,22 @@ public class SignupServlet extends HttpServlet {
 		SignupLogic sl = new SignupLogic();
 		boolean integrityOK = sl.hasAccountIdIntegrity(signupUser);
 		
+		//セッションスコープに登録ユーザー情報を保存
+		HttpSession session = request.getSession();
+		session.setAttribute("signupUser", signupUser);
+		
 		if(integrityOK) {//アカウントIDの重複がなければ
-			//セッションスコープに登録ユーザー情報を保存
-			HttpSession session = request.getSession();
-			session.setAttribute("signupUser", signupUser);
-			
 			//確認画面へフォワード
-			RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/confirm_signup.jsp");
+			RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/signup_confirm.jsp");
 			dispatcher.forward(request, response);
 		}else {//アカウントIDに重複があった場合は
 			
+			//エラーメッセージをリクエストスコープに保存
+			String errorMsg_Id = "このアカウントIDは既に使用されています。";
+			request.setAttribute("errorMsg_Id", errorMsg_Id);
 			
-			String errorMsg = "このアカウントIDは既に使用されています。";
-			
-			//入力画面へ再フォワード
-			RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/confirm_signup.jsp");
+			//入力画面へフォワード
+			RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/signup.jsp");
 			dispatcher.forward(request, response);
 		}
 	}
