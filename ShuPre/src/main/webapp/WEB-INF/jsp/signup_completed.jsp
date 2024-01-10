@@ -8,5 +8,6 @@
 </head>
 <body>
 	<h1>登録完了！</h1>
+	<a href="LoginServlet">ログイン</a>
 </body>
 </html>
