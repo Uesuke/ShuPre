@@ -13,21 +13,23 @@ User user = (User)session.getAttribute("user");
         <link rel="stylesheet" href="css/style.css">
     </head>
     <body>
-        <div id="index">
-            <div class="main">
-                <h1>ホーム画面</h1>
-                <h2>Profile</h2>
-                <p>お名前：<%= user.getName() %>さん</p>
-                <p>アカウントID:<%= user.getAccountId() %></p>
-                <h2>Records</h2>
-                <ul>
-                    <li>
-                        「教材名」<br>
-                        取り組み時間：2h30min
-                        取り組み範囲：200～213p
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </body>
+		<div class="main">
+		    <h1>ホーム画面</h1>
+		    <h2>Profile</h2>
+		    <p>お名前：<%= user.getName() %>さん</p>
+			<p>アカウントID:<%= user.getAccountId() %></p>
+			<h2>Link</h2>
+			<ul>
+				<li><a href="RegisterMaterialServlet">教材登録</a></li>
+			</ul>
+		    <h2>Records</h2>
+		    <ul>
+		        <li>
+		            「教材名」<br>
+		            取り組み時間：2h30min
+		            取り組み範囲：200～213p
+		        </li>
+		    </ul>
+		</div>
+	</body>
 </html>
