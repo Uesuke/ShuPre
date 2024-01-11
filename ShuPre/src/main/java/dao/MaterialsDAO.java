@@ -5,8 +5,11 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import model.Material;
+import model.User;
 
 public class MaterialsDAO {
 	//データベース接続に使用する情報
@@ -61,5 +64,12 @@ public class MaterialsDAO {
 			return null;
 		}
 		return material;
+	}
+	public List<Material> viewMaterialList(User user){
+		List<Material> materialList = new ArrayList<Material>();
+		//やることのメモ
+		//ユーザーIDを引っ張ってきてMaterialsテーブルをUserIdで検索。
+		//Materialをインスタンス化してListにまとめる
+		return materialList;
 	}
 }
