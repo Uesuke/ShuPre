@@ -65,11 +65,40 @@ public class MaterialsDAO {
 		}
 		return material;
 	}
-	public List<Material> viewMaterialList(User user){
+	public List<Material> findAllByUser(User user){
+		Material material = null;
 		List<Material> materialList = new ArrayList<Material>();
-		//やることのメモ
-		//ユーザーIDを引っ張ってきてMaterialsテーブルをUserIdで検索。
-		//Materialをインスタンス化してListにまとめる
+		int userId = user.getUserId();
+		//JDBCドライバを読み込む
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+		}catch(ClassNotFoundException e) {
+			throw new IllegalStateException("JDBCドライバを読み込めませんでした");
+		}
+		//データベースに接続
+		try(Connection conn = DriverManager.getConnection(JDBC_URL, DB_USER,DB_PASS)) {
+			//SELECT文を準備
+			String sql = "SELECT * FROM Materials WHERE userId = ?";
+			PreparedStatement pStmt = conn.prepareStatement(sql);
+			pStmt.setInt(1, userId);
+			
+			//SELECT文を実行し、結果表を取得
+			ResultSet rs = pStmt.executeQuery();
+			
+			while(rs.next()) {
+				int materialId = rs.getInt("materialId");
+				String materialName = rs.getString("materialName");
+				int pageStart = rs.getInt("pageStart");
+				int pageEnd = rs.getInt("pageEnd");
+				int sectionStart = rs.getInt("sectionStart");
+				int sectionEnd = rs.getInt("sectionEnd");
+				material = new Material(materialId, materialName, pageStart, pageEnd, sectionStart, sectionEnd, userId);
+				materialList.add(material);
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
 		return materialList;
 	}
 }
