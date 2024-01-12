@@ -21,6 +21,7 @@ User user = (User)session.getAttribute("user");
 			<h2>Link</h2>
 			<ul>
 				<li><a href="RegisterMaterialServlet">教材登録</a></li>
+				<a href="MaterialLibraryServlet">教材一覧</a></li>
 			</ul>
 		    <h2>Records</h2>
 		    <ul>

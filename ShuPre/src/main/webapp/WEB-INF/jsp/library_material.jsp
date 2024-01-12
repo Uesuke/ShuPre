@@ -1,5 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="model.User, model.Material,java.util.List" %>
+<%
+//セッションスコープに保存されたユーザー情報を取得
+User user = (User)session.getAttribute("user");
+//アプリケーションスコープに保存されたつぶやきリストを取得
+List<Material> materialList = (List<Material>)session.getAttribute("materialList");
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,8 +19,11 @@
         <ul class="flex justify-center">
 			<% for(Material material : materialList){ %>
 				<li>
-					<p><%= material.getName() %></p>
-					<p>ページ数：<%= material.getPageStart() %>～<%= material.getPageEnd() %></p>
+					<h2><%= material.getMaterialName() %></h2>
+					<p><%= material.getPageStart() %>～<%= material.getPageEnd() %>ページ</p>
+					<p>総ページ数：<%= material.getTotalPages() %></p>
+					<p><%= material.getSectionStart() %>～<%= material.getSectionEnd() %>セクション</p>
+					<p>総セクション数：<%= material.getTotalSections() %></p>
 				</li>
 			<% } %>
         </ul>

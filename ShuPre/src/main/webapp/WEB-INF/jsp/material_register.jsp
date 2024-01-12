@@ -16,15 +16,19 @@
 					<form action="" method="post">
 						<div class="mb-6">
 							<label for="materialName" class="block mb-2">教材名</label>
-							<input type="text" id="materialName" name="materialName">
+							<input type="text" id="materialName" class="form-input border-2 border-gray-500" name="materialName">
 						</div>
 						<div class="mb-6">
 							<label for="name" class="block mb-2">有効ページ</label>
-							<input type="number" id="pageStart" name="pageStart">～<input type="number" id="pageEnd" name="pageEnd">
+							<input type="number" id="pageStart" class="form-input border-2 border-gray-500" name="pageStart">
+							～
+							<input type="number" id="pageEnd" class="form-input border-2 border-gray-500" name="pageEnd">
 						</div>
 						<div class="mb-6">
 							<label for="name" class="block mb-2">章を入力</label>
-							<input type="number" id="sectionStart" name="sectionStart">～<input type="number" id="sectionEnd" name="sectionEnd">
+							<input type="number" id="sectionStart" class="form-input border-2 border-gray-500" name="sectionStart">
+							～
+							<input type="number" id="sectionEnd" class="form-input border-2 border-gray-500" name="sectionEnd">
 						</div>
 						<button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">登録</button>
 					</form>

@@ -19,7 +19,7 @@ public class CompleteSignupServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		//セッションスコープにから登録ユーザー情報を受け取る
+		//セッションスコープから登録ユーザー情報を受け取る
 		HttpSession session = request.getSession();
 		SignupUser signupUser = (SignupUser)session.getAttribute("signupUser");
 		

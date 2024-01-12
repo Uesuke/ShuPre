@@ -19,6 +19,20 @@ public class Material {
 		this.userId = userId;
 	}
 	
+	//固有のメソッド
+	
+	public int getTotalPages() {
+		int totalPages = this.pageEnd - this.pageStart + 1;
+		return totalPages;
+	}
+	
+	public int getTotalSections() {
+		int totalSections = this.sectionEnd - this.sectionStart + 1;
+		return totalSections;
+	}
+	
+	//セッター、ゲッターメソッド
+	
 	public void setMaterialId(int materialId) {
         this.materialId = materialId;
     }
