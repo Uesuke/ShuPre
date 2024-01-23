@@ -13,12 +13,12 @@
                 <h1>ログイン画面</h1>
                 <div class="form_wrapper">
                 <form action="LoginServlet" method="post">
-                        <p>ユーザーID：<br>
-                        <input type="id" name="accountId" placeholder="IDを入力"></p>
-                         <p>パスワード：<br>
-                        <input type="password" name="pass" placeholder="パスワードを入力"></p>
-                        <button type="submit">ログイン</button>
-                    </form>
+                    <p>ユーザーID：<br>
+                    <input type="id" name="accountId" placeholder="IDを入力"></p>
+                     <p>パスワード：<br>
+                    <input type="password" name="pass" placeholder="パスワードを入力"></p>
+                    <button type="submit">ログイン</button>
+                </form>
                 </div>
                 <p>※アカウントをお持ちでない方は<a href="SignupServlet">こちら</a></p>
                 <p><a href="index.jsp">トップへ</a></p>

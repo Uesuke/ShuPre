@@ -13,7 +13,7 @@
             <div class="w-full max-w-lg">
 				<h1 class="text-3xl text-center mb-8">教材登録画面</h1>
 				<div class="bg-white p-8 rounded shadow-lg">
-					<form action="" method="post">
+					<form action="RegisterMaterialServlet" method="post">
 						<div class="mb-6">
 							<label for="materialName" class="block mb-2">教材名</label>
 							<input type="text" id="materialName" class="form-input border-2 border-gray-500" name="materialName">
