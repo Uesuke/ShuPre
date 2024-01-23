@@ -4,7 +4,7 @@
 <%
 //セッションスコープに保存されたユーザー情報を取得
 User user = (User)session.getAttribute("user");
-//アプリケーションスコープに保存されたつぶやきリストを取得
+//セッションスコープに保存されたMaterialリストを取得
 List<Material> materialList = (List<Material>)session.getAttribute("materialList");
 %>
 <!DOCTYPE html>

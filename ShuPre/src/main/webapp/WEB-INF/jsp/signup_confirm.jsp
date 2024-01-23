@@ -10,7 +10,6 @@
     <meta charset="UTF-8">
     <title>Sign-up|Study-with-You</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/style.css">
 </head>
 <body class="pt-5">
     <div id="signup_confirm" class="container">
@@ -42,7 +41,6 @@
 	                <button class="btn btn-secondary mt-3">登録内容を修正</button>
 	            </form>
             </div>
-            
         </div>
     </div>
 </body>

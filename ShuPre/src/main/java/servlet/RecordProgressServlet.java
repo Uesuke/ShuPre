@@ -1,6 +1,10 @@
 package servlet;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -13,15 +17,33 @@ import javax.servlet.http.HttpSession;
 import model.Material;
 import model.RegisterMaterialLogic;
 import model.User;
+import model.ViewMaterialLogic;
 
-@WebServlet("/RegisterMaterialServlet")
-public class RegisterMaterialServlet extends HttpServlet {
+@WebServlet("/RecordProgressServlet")
+public class RecordProgressServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+       
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//フォワード
-		RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/material_register.jsp");
-		dispatcher.forward(request, response);
+		//セッションスコープからユーザー情報を取得
+		HttpSession session = request.getSession();
+		User user = (User)session.getAttribute("user");
+		
+		if(user == null) {	//ログインしていない場合
+			//リダイレクト
+			response.sendRedirect("WEB-INF/jsp/login.jsp");
+		}
+		else {	//ログイン済みの場合
+			//ユーザーに紐づいたMaterialをArrayListに取得
+			ViewMaterialLogic vml = new ViewMaterialLogic();
+			List<Material> materialList = vml.execute(user);
+			
+			//セッションスコープにリストを保存
+			session.setAttribute("materialList", materialList);
+			//進捗記録画面にフォワード
+			RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/progress_record.jsp");
+			dispatcher.forward(request, response);
+		}
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -31,14 +53,21 @@ public class RegisterMaterialServlet extends HttpServlet {
 		
 		//リクエストパラメータの取得
 		request.setCharacterEncoding("UTF-8");
-		String materialName = request.getParameter("materialName");
-		int pageStart = Integer.parseInt(request.getParameter("pageStart"));
-		int pageEnd = Integer.parseInt(request.getParameter("pageEnd"));
-		int sectionStart = Integer.parseInt(request.getParameter("sectionStart"));
-		int sectionEnd = Integer.parseInt(request.getParameter("sectionEnd"));
 		int userId = user.getUserId();
+	    int goalId = Integer.parseInt(request.getParameter("goalId"));
+	    int materialId = Integer.parseInt(request.getParameter("materialId"));
+	    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+	    try {
+			Date date = sdf.parse((String)request.getParameter("date"));
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+	    int timeStart = Integer.parseInt(request.getParameter("timeStart"));
+	    int timeEnd = Integer.parseInt(request.getParameter("timeEnd"));
+	    int pageStartAt = Integer.parseInt(request.getParameter("pageStartAt"));
+	    int pageEndAt = Integer.parseInt(request.getParameter("pageEndAt"));;
 		
-		//教材登録処理
+		//進捗記録処理
 		Material registeringMaterial = new Material(0, materialName, pageStart, pageEnd, sectionStart, sectionEnd, userId);
 		RegisterMaterialLogic rml = new RegisterMaterialLogic();
 		Material material = rml.execute(registeringMaterial);
@@ -46,9 +75,7 @@ public class RegisterMaterialServlet extends HttpServlet {
 		if(material != null) {
 			//登録した教材をセッションスコープに保存
 			session.setAttribute("material", material);
-			//教材一覧画面へフォワード
-			RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/register_material_completed.jsp");
-			dispatcher.forward(request, response);
+			
 		}
 		else {//SQLExceptionにより登録失敗した場合
 			//エラーメッセージをリクエストスコープに保存
@@ -59,7 +86,5 @@ public class RegisterMaterialServlet extends HttpServlet {
 			RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/material_register.jsp");
 			dispatcher.forward(request, response);
 		}
-			
 	}
-
 }
