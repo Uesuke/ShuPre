@@ -14,7 +14,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import model.Goal;
 import model.Material;
+import model.SetGoalLogic;
 import model.User;
 import model.ViewMaterialLogic;
 
@@ -50,22 +52,38 @@ public class SetGoalServlet extends HttpServlet {
 		User user = (User) session.getAttribute("user");
 		//リクエストパラメータの取得
 		request.setCharacterEncoding("UTF-8");
-		String goalName = request.getParameter("materialName");
 		
-	    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		
+		
+	    
 	    try {
+	    	String goalName = request.getParameter("materialName");
+			int userId = user.getUserId();
+			int statusTypeId = 1;	//進行中
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 			Date dateStart = sdf.parse((String)request.getParameter("dateStart"));
 			Date dateEnd = sdf.parse((String)request.getParameter("dateEnd"));
+			int standardTypeId = Integer.parseInt(request.getParameter("standardTypeId"));
+			
+			//入力値をもとにDBに目標を登録
+			Goal settingGoal = new Goal(0, goalName, userId, dateStart, dateEnd, standardTypeId, statusTypeId);
+			SetGoalLogic sgl = new SetGoalLogic();
+			Goal goal = sgl.execute(settingGoal);
+			//goalIdを取得
+			int goalId = goal.getGoalId();
+			
+			
+			
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
-	    int statusTypeId = 1;	//進行中
+	    
 	    //詳細のパラメータを取得
 		int pageStart = Integer.parseInt(request.getParameter("pageStart"));
 		int pageEnd = Integer.parseInt(request.getParameter("pageEnd"));
 		int sectionStart = Integer.parseInt(request.getParameter("sectionStart"));
 		int sectionEnd = Integer.parseInt(request.getParameter("sectionEnd"));
-		int userId = user.getUserId();
+		
 		
 	}
 

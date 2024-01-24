@@ -20,7 +20,6 @@ public class GoalDetailsDAO {
 	    int materialId = gd.getMaterialId();
 	    int startFrom = gd.getStartFrom();
 	    int endTo = gd.getEndTo();
-	    int standardTypeId = gd.getStandardTypeId();
 		
 		//JDBCドライバを読み込む
 		try {
@@ -32,20 +31,21 @@ public class GoalDetailsDAO {
 		try(Connection conn = DriverManager.getConnection(JDBC_URL, DB_USER,DB_PASS)) {
 
 			//INSERT文を準備
-			String sql = "INSERT INTO GoalDetails (goalId, materialId, startFrom, endTo, standardTypeId) VALUES(?, ?, ?, ?, ?);";
+			String sql = "INSERT INTO GoalDetails (goalId, materialId, startFrom, endTo) VALUES(?, ?, ?, ?);";
 			PreparedStatement pStmt = conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
 			pStmt.setInt(1, goalId);
 			pStmt.setInt(2, materialId);
 			pStmt.setInt(3, startFrom);
 			pStmt.setInt(4, endTo);
-			pStmt.setInt(5, standardTypeId);
 			
 			//INSERT文の実行
 			int affectedRows = pStmt.executeUpdate();
 	        if (affectedRows == 0) {
 	            throw new SQLException("目標詳細の登録に失敗しました。");
+	        }else {
+	        	goalDetail = new GoalDetail(goalId, materialId, startFrom, endTo);
+	        	return goalDetail;
 	        }
-	        return goalDetail;
 		}catch(SQLException e) {
 			return null;
 		}

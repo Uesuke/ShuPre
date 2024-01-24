@@ -2,7 +2,7 @@ package model;
 
 import dao.GoalDetailsDAO;
 
-public class SetGoalDetailsLogic {
+public class SetGoalDetailLogic {
 
 	public GoalDetail execute(GoalDetail settingGoalDetail) {
 		GoalDetailsDAO dao = new GoalDetailsDAO();
