@@ -23,6 +23,7 @@ public class GoalsDAO {
 	    int userId = sg.getUserId();
 	    Date dateStart = sg.getDateStart();
 	    Date dateEnd = sg.getDateEnd();
+	    int standardTypeId = sg.getStandardTypeId();
 	    int statusTypeId = sg.getStatusTypeId();
 		
 		//JDBCドライバを読み込む
@@ -42,13 +43,14 @@ public class GoalsDAO {
 			java.sql.Date sqlDateEnd = java.sql.Date.valueOf(strDateEnd);
 			
 			//INSERT文を準備
-			String sql = "INSERT INTO Goals (goalName, userId, dateStart, dateEnd, statusTypeId) VALUES(?, ?, ?, ?, ?);";
+			String sql = "INSERT INTO Goals (goalName, userId, dateStart, dateEnd, standardTypeId, statusTypeId) VALUES(?, ?, ?, ?, ?, ?);";
 			PreparedStatement pStmt = conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
 			pStmt.setString(1, goalName);
 			pStmt.setInt(2, userId);
 			pStmt.setDate(3, sqlDateStart);
 			pStmt.setDate(4, sqlDateEnd);
-			pStmt.setInt(5, statusTypeId);
+			pStmt.setInt(5, standardTypeId);
+			pStmt.setInt(6, statusTypeId);
 			
 			//INSERT文の実行
 			int affectedRows = pStmt.executeUpdate();
@@ -60,7 +62,7 @@ public class GoalsDAO {
 	        try (ResultSet generatedKeys = pStmt.getGeneratedKeys()) {
 	            if (generatedKeys.next()) {
 	                int goalId = generatedKeys.getInt(1);
-	                goal = new Goal(goalId, goalName, userId, dateStart, dateEnd, statusTypeId);
+	                goal = new Goal(goalId, goalName, userId, dateStart, dateEnd, standardTypeId, statusTypeId);
 	            } else {
 	                throw new SQLException("goalIDの取得に失敗しました。");
 	            }

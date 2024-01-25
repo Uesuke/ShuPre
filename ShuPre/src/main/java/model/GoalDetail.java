@@ -7,14 +7,12 @@ public class GoalDetail implements Serializable {
     private int materialId;
     private int startFrom;
     private int endTo;
-    private int standardTypeId;
 
-    public GoalDetail(int goalId, int materialId, int startFrom, int endTo, int standardTypeId) {
+    public GoalDetail(int goalId, int materialId, int startFrom, int endTo) {
         this.goalId = goalId;
         this.materialId = materialId;
         this.startFrom = startFrom;
         this.endTo = endTo;
-        this.standardTypeId = standardTypeId;
     }
 
     // ゲッターメソッド
@@ -34,10 +32,6 @@ public class GoalDetail implements Serializable {
         return endTo;
     }
 
-    public int getStandardTypeId() {
-        return standardTypeId;
-    }
-
     // セッターメソッド
     public void setGoalId(int goalId) {
         this.goalId = goalId;
@@ -53,9 +47,5 @@ public class GoalDetail implements Serializable {
 
     public void setEndTo(int endTo) {
         this.endTo = endTo;
-    }
-
-    public void setStandardTypeId(int standardTypeId) {
-        this.standardTypeId = standardTypeId;
     }
 }

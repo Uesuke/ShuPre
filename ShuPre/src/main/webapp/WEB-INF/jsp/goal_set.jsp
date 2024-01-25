@@ -75,6 +75,7 @@ List<Material> materialList = (List<Material>)session.getAttribute("materialList
 						</template>
 						<input id="num_materials" type="hidden" value="1" name="num_materials">
 						<button type="button" id="add-form" onclick="addForm()" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">教材を追加</button>
+						<button type="button" id="deleteBtn" onclick="deleteForm()" style="visibility: hidden" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">教材を削除</button>
 						<div>
 							<input type="checkbox" class="form-input border-2 border-gray-500 mb-2" name="isShared">
 							先生と共有
