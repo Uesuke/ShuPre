@@ -73,11 +73,12 @@ public class SetGoalServlet extends HttpServlet {
 			int goalId = goal.getGoalId();
 			
 			//目標基本情報をリクエストパラメータに保存
-			request.setAttribute("setGoal", goal);
+			request.setAttribute("goal", goal);
 			
 			//目標詳細登録
 			//リクエストパラメータから教材数を獲得
 			int num_materials = Integer.parseInt(request.getParameter("num_materials"));
+			
 			List<GoalDetail> goalDetails = new ArrayList<GoalDetail>();
 			
 			//教材数に応じて登録処理を実施
@@ -89,8 +90,11 @@ public class SetGoalServlet extends HttpServlet {
 				GoalDetail settingGoalDetail = new GoalDetail(goalId, materialId, startFrom, endTo);
 				SetGoalDetailLogic sgdl = new SetGoalDetailLogic();
 				GoalDetail goalDetail = sgdl.execute(settingGoalDetail);
-				request.setAttribute("setGoalDetail_" + idx, goalDetail);
+				goalDetails.add(goalDetail);
 			}
+			
+			//目標詳細情報リストをリクエストスコープに保存
+			request.setAttribute("goalDetails", goalDetails);
 			
 			//登録完了画面にフォワード
 			RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/goal_set_completed.jsp");
