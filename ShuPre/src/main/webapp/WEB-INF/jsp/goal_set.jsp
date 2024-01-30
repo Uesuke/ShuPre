@@ -51,9 +51,9 @@ List<Material> materialList = (List<Material>)session.getAttribute("materialList
 										<option value="<%= material.getMaterialId() %>" label="<%= material.getMaterialName() %>" >
 										<% } %>
 									</select>
-									<input type="number" id="pageStart_0" class="form-input w-16 border-2 border-gray-500" name="pageStart_0">
+									<input type="number" id="startFrom_0" class="form-input w-16 border-2 border-gray-500" name="startFrom_0">
 									～
-									<input type="number" id="pageEnd_0" class="form-input w-16 border-2 border-gray-500" name="pageEnd_0">
+									<input type="number" id="endTo_0" class="form-input w-16 border-2 border-gray-500" name="endTo_0">
 								</div>
 							</li>
 						</ul>
@@ -67,9 +67,9 @@ List<Material> materialList = (List<Material>)session.getAttribute("materialList
 										<option value="<%= material.getMaterialId() %>" label="<%= material.getMaterialName() %>" >
 										<% } %>
 									</select>
-									<input type="number" id="pageStart_" class="form-input w-16 border-2 border-gray-500" name="pageStart_">
+									<input type="number" id="startFrom_" class="form-input w-16 border-2 border-gray-500" name="startFrom_">
 									～
-									<input type="number" id="pageEnd_" class="form-input w-16 border-2 border-gray-500" name="pageEnd_">
+									<input type="number" id="endTo_" class="form-input w-16 border-2 border-gray-500" name="endTo_">
 								</div>
 							</li>
 						</template>
